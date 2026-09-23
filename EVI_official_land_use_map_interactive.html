@@ -106,8 +106,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <script>
 (function(){
-  var DEFAULT = { lat: 42.4225, lng: -76.5355, widthM: 900, rot: 0, opacity: 0.8, multiply: false, style: 'vivid' };
-  var STORE = 'ovl-aligner-v2';
+  var DEFAULT = { lat: 42.44354219131443, lng: -76.5412123594433, widthM: 1300, rot: -3.3, opacity: 0.8, multiply: false, style: 'vivid' };
+  var STORE = 'ovl-aligner-v3';
   var st = Object.assign({}, DEFAULT);
   var hadSaved = false;
   try { var s = localStorage.getItem(STORE); if (s) { st = Object.assign(st, JSON.parse(s)); hadSaved = true; } } catch(e){}
@@ -203,7 +203,7 @@
     this.textContent = p.classList.contains('collapsed') ? '+' : '–';
   });
   $('reset').addEventListener('click', function(){
-    st = Object.assign({}, DEFAULT); var c = map.getCenter(); st.lat = c.lat; st.lng = c.lng; place();
+    st = Object.assign({}, DEFAULT); map.setView([st.lat, st.lng], 16); applyStyle(); place();
   });
   $('copy').addEventListener('click', function(){
     var txt = JSON.stringify({ center: [st.lat, st.lng], width_m: Math.round(st.widthM*10)/10,
@@ -286,8 +286,7 @@
   });
 
   // start: find the site, and drop the overlay at map center
-  if (!hadSaved) geocode('Rachel Carson Way, Ithaca, NY', true);
-  else map.setView([st.lat, st.lng], 16);
+  map.setView([st.lat, st.lng], 16);
   place();
 })();
 </script>
